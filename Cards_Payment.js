@@ -1,5 +1,5 @@
 import { loadStripe } from "@stripe/stripe-js"
-import { pay } from '../../services/orderService';   //Service to call API endpoint for Payment --> this route is given in this folder
+import { pay } from '../../services/orderService'; //Check (pay route for stripe pay id) file in this folder use in backend as api endpint
 import { toast } from 'react-toastify';
 
 import './btnsStyle.css'
