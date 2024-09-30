@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import classes from './paymentPage.module.css';
-import { getNewOrderForCurrentUser } from '../../services/orderService';
 
 import { useCart } from '../../hooks/useCart';
 
@@ -13,12 +12,12 @@ import Input from '../../components/Input/Input';
 // THIS PAGE IS UNDER DEVELOPMENT SOME BUGS TO BE FIXED AND WAITING FOR JAZZCASH CREDENTIALS ARRIVAL
 
 export default function PaymentPage() {
-  const { cart } = useCart();
-  const [order, setOrder] = useState({ ...cart});
+  const { cart } = useCart(); //Getting Cart Items For Payment
+  const [order, setOrder] = useState({ ...cart});  
 
   const [formData, setFormData] = useState({
-    jazz_cash_no: '',
-    cnic_digits: '',
+    jazz_cash_no: '', //Jazz Sandbox Phone Number
+    cnic_digits: '',//Jazz Sandbox CNIC Digits
     product_id: '',
     price: ''
   })
@@ -40,7 +39,7 @@ export default function PaymentPage() {
       jazz_cash_no: info.phoneNo,
       cnic_digits: info.cnicDigits,
       product_id: order._id,
-      price: order.items[0].price * 100
+      price: order.items[0].price * 100 //It is a step required more details in jazz cash sandbox documentation
     })
 
     createCharge(formData);
