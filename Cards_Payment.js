@@ -1,40 +1,31 @@
 import { loadStripe } from "@stripe/stripe-js"
-import { pay } from '../../services/orderService';
+import { pay } from '../../services/orderService';   //Service to call API endpoint for Payment --> this route is given in this folder
 import { toast } from 'react-toastify';
-
-import { useCart } from '../../hooks/useCart';
 
 import './btnsStyle.css'
 
-export default function CARDS_PAYMENT({ order }) {
-    const { clearCart } = useCart();
+export default function CARDS_PAYMENT({ order }) {  //Getting ordered/ cart-items as props
 
     const CARD_PAY = async() => {
-        if (!order.addressLatLng) {
-            toast.warning('Please select your location on the map');
-            return;
-        }
 
-        const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLISH)
+        const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLISH_KEY)
         const body = {
             products: order,
         }
         const headers = {
             "Content-Type": "application/json"
         }
-        const orderStatus = await pay(body, headers)
+        const orderStatus = await pay(body, headers) //API Service To Call API Pay Endpoint For Session ID
         toast.error(orderStatus.rawType)
-        console.log(orderStatus)
-        const result = stripe.redirectToCheckout({
+        
+        const result = stripe.redirectToCheckout({ //Stripe Checkout Page will be rendered to Pay
             sessionId: orderStatus.id
         });
-        console.log(result)
         
         if (result.error){
             toast.error(result.error)
             return
         }
-        clearCart()
     }
     return(
         <button onClick={() => CARD_PAY()}
