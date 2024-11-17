@@ -1,4 +1,4 @@
-Blueprint for some payment gateways in JS
+<h2>Blueprint for some payment gateways in JS </h2>
 
 💳 Payments
 Payments is a Node.js application for handling payment processing using various payment gateways and methods.
